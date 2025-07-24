@@ -181,7 +181,7 @@
 
     <!-- Membuat Menu Dashboard -->
 
-    <menuitem id="menu_dashboard_training_odoo" name="Training Odoo"/>
+    <menuitem id="menu_dashboard_training_odoo" name="Training Odoo" web_icon="training_odoo,static/description/icon.png"/>
 
     <!-- Membuat Menu Bar Training -->
 
