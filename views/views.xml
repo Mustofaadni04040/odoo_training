@@ -1,0 +1,118 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="training_odoo.list">
+      <field name="name">training_odoo list</field>
+      <field name="model">training_odoo.training_odoo</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </list>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="training_odoo.action_window">
+      <field name="name">training_odoo window</field>
+      <field name="res_model">training_odoo.training_odoo</field>
+      <field name="view_mode">list,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="training_odoo.action_server">
+      <field name="name">training_odoo server</field>
+      <field name="model_id" ref="model_training_odoo_training_odoo"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "list,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="training_odoo" id="training_odoo.menu_root"/>
+-->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="training_odoo.menu_1" parent="training_odoo.menu_root"/>
+    <menuitem name="Menu 2" id="training_odoo.menu_2" parent="training_odoo.menu_root"/>
+-->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="training_odoo.menu_1_list" parent="training_odoo.menu_1" action="training_odoo.action_window"/>
+    <menuitem name="Server to list" id="training_odoo" parent="training_odoo.menu_2" action="training_odoo.action_server"/>
+-->
+
+    <!-- Membuat view list course -->
+
+    <record id="training_course_view_list" model="ir.ui.view">
+      <field name="name">training.course.list</field>
+      <field name="model">training.course</field>
+      <field name="arch" type="xml">
+        <list string="Course List">
+          <field name="name" />
+          <field name="description" />
+        </list>
+      </field>
+    </record>
+
+    <!-- Membuat view form course -->
+    <record id="training_course_view_form" model="ir.ui.view">
+      <field name="name">training.course.form</field>
+      <field name="model">training.course</field>
+      <field name="arch" type="xml">
+        <form string="Course Form">
+          <sheet>
+            <group>
+              <field name="name" />
+            </group>
+            <notebook>
+              <page string="Keterangan">
+                <group>
+                  <field name="description" />
+                </group>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Membuat Action/Event Course -->
+
+    <record id="training_course_action" model="ir.actions.act_window">
+      <field name="name">Course</field>
+      <field name="res_model">training.course</field>
+      <field name="view_mode">list,form</field>
+      <field name="help" type="html">
+        <p name="o_view_nocontent_smiling_face">
+            Buatlah kursus pertamamu ...
+        </p>
+      </field>
+    </record>
+
+    <!-- Membuat Menu Dashboard -->
+
+    <menuitem id="menu_dashboard_training_odoo" name="Training Odoo"/>
+
+    <!-- Membuat Menu Bar Training -->
+
+    <menuitem id="menu_bar_training_odoo" name="Training" parent="menu_dashboard_training_odoo"/>
+
+    <!-- Membuat Menu Item Course -->
+
+    <menuitem id="menu_item_training_course" name="Course" parent="menu_bar_training_odoo" action="training_course_action"/>
+  </data>
+</odoo>
