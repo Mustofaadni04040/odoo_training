@@ -159,6 +159,43 @@
       </field>
     </record>
 
+    <!-- Membuat view list attendee -->
+     <record id="training_attendee_view_list" model="ir.ui.view">
+      <field name="name">training.attendee.list</field>
+      <field name="model">training.attendee</field>
+      <field name="arch" type="xml">
+        <list string="Attendee List">
+          <field name="name" string="Nama"/>
+          <field name="email" />
+          <field name="sex" />
+          <field name="marital" />
+        </list>
+      </field>
+     </record>
+
+     <!-- Membuat view form attendee -->
+
+     <record id="training_attendee_view_form" model="ir.ui.view">
+      <field name="name">training.attendee.form</field>
+      <field name="model">training.attendee</field>
+      <field name="arch" type="xml">
+        <form string="Attendee Form">
+          <sheet>
+            <group>
+              <group>
+                <field name="name" />
+                <field name="sex" widget="radio" />
+              </group>
+              <group>
+                <field name="email" />
+                <field name="marital" />
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+     </record>
+
     <!-- Membuat Action/Event Course -->
 
     <record id="training_course_action" model="ir.actions.act_window">
@@ -179,20 +216,11 @@
       <field name="view_mode">list,form</field>
     </record>
 
-    <!-- Membuat Menu Dashboard -->
-
-    <menuitem id="menu_dashboard_training_odoo" name="Training Odoo" web_icon="training_odoo,static/description/icon.png"/>
-
-    <!-- Membuat Menu Bar Training -->
-
-    <menuitem id="menu_bar_training_odoo" name="Training" parent="menu_dashboard_training_odoo"/>
-
-    <!-- Membuat Menu Item Course -->
-
-    <menuitem id="menu_item_training_course" name="Course" parent="menu_bar_training_odoo" action="training_course_action"/>
-
-    <!-- Membuat Menu Item Session -->
-
-    <menuitem id="menu_item_training_session" name="Session" parent="menu_bar_training_odoo" action="training_session_action"/>
+    <!-- Membuat Action/Event attendee -->
+    <record id="training_attendee_action" model="ir.actions.act_window">
+      <field name="name">Attendee</field>
+      <field name="res_model">training.attendee</field>
+      <field name="view_mode">list,form</field>
+    </record>
   </data>
 </odoo>

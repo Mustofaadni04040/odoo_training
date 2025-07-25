@@ -41,8 +41,10 @@ class TrainingSession(models.Model):
 class TrainingAttendee(models.Model):
     _name = "training.attendee"
     _description = "Training Peserta"
+    _inherits = {"res.partner": "partner_id"}
 
-    name = fields.Char(string="Nama", required=True)
+    partner_id = fields.Many2one("res.partner", "Partner", required=True, ondelete="cascade")
+    name = fields.Char(related="partner_id.name", inherited=True, readonly=False)
     sex = fields.Selection([("male", "Pria"), ("female", "Wanita")], string="Kelamin", required=True, help="Jenis Kelamin")
     marital = fields.Selection([
         ("single", "Belum Menikah"),
