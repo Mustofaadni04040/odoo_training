@@ -37,3 +37,15 @@ class TrainingSession(models.Model):
     duration= fields.Float(string="Durasi", help="Jumlah Hari Training")
     seats = fields.Integer(string="Kursi", help="Jumlah Kuota Kursi")
     partner_id = fields.Many2one("res.partner", string="Instruktur")
+
+class TrainingAttendee(models.Model):
+    _name = "training.attendee"
+    _description = "Training Peserta"
+
+    name = fields.Char(string="Nama", required=True)
+    sex = fields.Selection([("male", "Pria"), ("female", "Wanita")], string="Kelamin", required=True, help="Jenis Kelamin")
+    marital = fields.Selection([
+        ("single", "Belum Menikah"),
+        ("married", "Menikah"),
+        ("divorced", "Cerai")], 
+        string="Pernikahan", help="Status Pernikahan")
