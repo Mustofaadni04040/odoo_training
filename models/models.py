@@ -21,11 +21,24 @@ class TrainingCourse(models.Model):
     _name = 'training.course'
     _description = 'Training Course'
 
+    ref = fields.Char(string="Referensi", readonly=True, default="/")
+
+    @api.model_create_multi # memberikan nomor sequence ketika record pertama kali dibuka dengan menekan tombol save/pindah fokus window maka method create dijalankan
+    def create(self, vals_list):
+        for vals in vals_list:
+            vals["ref"] = self.env["ir.sequence"].next_by_code("training.course")
+        return super().create(vals_list)
+
     name = fields.Char(string='Judul', required=True)
     description = fields.Text(string='Keterangan')
     user_id = fields.Many2one("res.users", string="Penanggung Jawab")
     session_line = fields.One2many("training.session", "course_id", string="Sesi")
     product_ids = fields.Many2many("product.product", "course_product_rel", "course_id", "product_id", string="Cindera Mata")
+
+    _sql_constraints = [
+        ("nama_kursus_unik", "UNIQUE(name)", "Judul kursus harus unik"),
+        ("nama_keterangan_cek", "CHECK(name != description)", "Judul kursus dan keterangan tidak boleh sama")
+    ]
 
 class TrainingSession(models.Model):
     _name = "training.session"

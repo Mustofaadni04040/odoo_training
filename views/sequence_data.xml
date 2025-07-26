@@ -1,5 +1,6 @@
 <odoo>
     <data noupdate="1">
+    <!-- Sequences training course -->
     <record id="sequence_training_course" model="ir.sequence">
         <field name="name">Training Course</field>
         <field name="code">training.course</field>
