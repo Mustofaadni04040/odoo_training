@@ -143,16 +143,19 @@
         <form string="Session Form">
           <sheet>
             <group>
-              <group>
+              <group string="Informasi">
                 <field name="course_id"/>
                 <field name="name"/>
                 <field name="partner_id"/>
               </group>
-              <group>
+              <group string="Jadwal">
                 <field name="start_date"/>
                 <field name="duration"/>
                 <field name="seats"/>
               </group>
+            </group>
+            <group string="Peserta">
+              <field name="attendee_ids" nolabel="1" colspan="2"/>
             </group>
           </sheet>
         </form>

@@ -36,7 +36,8 @@ class TrainingSession(models.Model):
     start_date = fields.Date(string="Tanggal")
     duration= fields.Float(string="Durasi", help="Jumlah Hari Training")
     seats = fields.Integer(string="Kursi", help="Jumlah Kuota Kursi")
-    partner_id = fields.Many2one("res.partner", string="Instruktur")
+    partner_id = fields.Many2one("res.partner", string="Instruktur", domain=[("instructor", "=", True)])
+    attendee_ids = fields.Many2many("training.attendee", "session_attendee_rel", "session_id", "attendee_id", "Peserta")
 
 class TrainingAttendee(models.Model):
     _name = "training.attendee"

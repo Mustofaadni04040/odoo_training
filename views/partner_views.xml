@@ -19,12 +19,14 @@
     </record>
 
     <!-- Membuat action/event -->
-     <record id="training_instructor_action" model="ir.actions.act_window">
+    <record id="training_instructor_action" model="ir.actions.act_window">
         <field name="name">Instructor</field>
         <field name="res_model">res.partner</field>
-        <field name="view_mode">list,form</field>
-     </record>
-
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('instructor', '=', True)]</field>
+        <field name="context">{'default_instructor': True}</field> <!-- default_instructor: ketika instructor dibuat langsung aktif/tercentang -->
+    </record>
+    
      <!-- Membuat menu bar configuration -->
       <menuitem id="menu_bar_configuration" name="Configuration" parent="menu_dashboard_training_odoo"/>
       <menuitem id="menu_item_training_instructor" name="Instructor" parent="menu_bar_configuration" action="training_instructor_action"/>
