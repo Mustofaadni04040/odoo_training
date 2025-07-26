@@ -131,6 +131,7 @@
           <field name="start_date"/>
           <field name="duration"/>
           <field name="seats"/>
+          <field name="taken_seats" widget="progressbar" />
         </list>
       </field>
     </record>
@@ -153,6 +154,9 @@
                 <field name="duration"/>
                 <field name="seats"/>
               </group>
+            </group>
+            <group>
+              <field name="taken_seats" widget="progressbar"/>
             </group>
             <group string="Peserta">
               <field name="attendee_ids" nolabel="1" colspan="2"/>
