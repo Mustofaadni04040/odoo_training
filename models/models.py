@@ -20,7 +20,8 @@ from odoo.exceptions import ValidationError
 
 class TrainingCourse(models.Model):
     _name = 'training.course'
-    _description = 'Training Course'
+    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _description = 'Training Kursus'
 
     ref = fields.Char(string="Referensi", readonly=True, default="/")
 
@@ -39,11 +40,11 @@ class TrainingCourse(models.Model):
         default.update(name=f"{name} ({x})")
         return super().copy(default)
 
-    name = fields.Char(string='Judul', required=True)
-    description = fields.Text(string='Keterangan')
-    user_id = fields.Many2one("res.users", string="Penanggung Jawab")
-    session_line = fields.One2many("training.session", "course_id", string="Sesi")
-    product_ids = fields.Many2many("product.product", "course_product_rel", "course_id", "product_id", string="Cindera Mata")
+    name = fields.Char(string='Judul', required=True, Tracking=True)
+    description = fields.Text(string='Keterangan', Tracking=True)
+    user_id = fields.Many2one("res.users", string="Penanggung Jawab", Tracking=True)
+    session_line = fields.One2many("training.session", "course_id", string="Sesi", Tracking=True)
+    product_ids = fields.Many2many("product.product", "course_product_rel", "course_id", "product_id", string="Cindera Mata", Tracking=True)
 
     _sql_constraints = [
         ("nama_kursus_unik", "UNIQUE(name)", "Judul kursus harus unik"),
@@ -83,7 +84,7 @@ class TrainingSession(models.Model):
     @api.onchange("duration")
     def verify_valid_duration(self):
         if self.duration <= 0:
-            self.duration = 1
+            self.duration = 1 # field ototmatis terupdate ke 1 jika diisi 0 atau negatif
             return {"warning": {"title": "Perhatian", "message": "Durasi Hari Training Tidak Boleh 0 atau Negatif"}}
 
 class TrainingAttendee(models.Model):

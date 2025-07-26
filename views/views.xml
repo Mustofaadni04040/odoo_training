@@ -71,59 +71,60 @@
     </record>
 
     <!-- Membuat view form course -->
-    <record id="training_course_view_form" model="ir.ui.view">
-      <field name="name">training.course.form</field>
-      <field name="model">training.course</field>
-      <field name="arch" type="xml">
+  <record id="training_course_view_form" model="ir.ui.view">
+    <field name="name">training.course.form</field>
+    <field name="model">training.course</field>
+    <field name="arch" type="xml">
         <form string="Course Form">
-          <sheet>
-            <div class="oe_title">
-              <h1>
-                <field name="ref" />
-              </h1>
-            </div>
-            <group>
-              <field name="name" />
-              <field name="user_id" />
-            </group>
-            <notebook>
-              <page string="Sesi">
+            <sheet>
+                <div class="oe_title">
+                    <h1>
+                        <field name="ref"/>
+                    </h1>
+                </div>
                 <group>
-                  <field name="session_line" mode="list,kanban" nolabel="1" colspan="2">
-                    <list string="Sesi" editable="top">
-                      <field name="name" />
-                      <field name="partner_id" />
-                      <field name="start_date" />
-                      <field name="duration" />
-                      <field name="seats" />
-                    </list>
-                    <form string="Sesi">
-                      <group>
-                        <field name="name" />
-                        <field name="partner_id" />
-                        <field name="start_date" />
-                        <field name="duration" />
-                        <field name="seats" />
-                      </group>
-                    </form>
-                  </field>
+                    <field name="name"/>
+                    <field name="user_id"/>
                 </group>
-              </page>
-              <page string="Cindera Mata">
-                <group>
-                  <field name="product_ids" nolabel="1" colspan="2" />
-                </group>
-              </page>
-              <page string="Keterangan">
-                <group>
-                  <field name="description" />
-                </group>
-              </page>
-            </notebook>
-          </sheet>
+                <notebook>
+                    <page string="Sesi">
+                        <group>
+                            <field name="session_line" mode="list,kanban" nolabel="1" colspan="2">
+                                <list string="Sesi" editable="top">
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="start_date"/>
+                                    <field name="duration"/>
+                                    <field name="seats"/>
+                                </list>
+                                <form string='Sesi'>
+                                    <group>
+                                        <field name="name"/>
+                                        <field name="partner_id"/>
+                                        <field name="start_date"/>
+                                        <field name="duration"/>
+                                        <field name="seats"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </group>
+                    </page>
+                    <page string="Cindera Mata">
+                        <group>
+                            <field name="product_ids" nolabel="1" colspan="2"/>
+                        </group>
+                    </page>
+                    <page string="Keterangan">
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </page>
+                </notebook>
+            </sheet>
+            <chatter/>
         </form>
-      </field>
-    </record>
+    </field>
+  </record>
 
     <!-- Membuat View List Session -->
     <record id="training_session_view_list" model="ir.ui.view">
@@ -237,6 +238,18 @@
       <field name="name">Attendee</field>
       <field name="res_model">training.attendee</field>
       <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Membuat Data Dummy Activity Type -->
+    <record id="mail_activity_data_penawaran" model="mail.activity.type">
+      <field name="name">Kirim Penawaran</field>
+      <field name="icon">fa-envelope</field>
+      <field name="res_model">training.course</field>
+    </record>
+    <record id="mail_activity_data_harga" model="mail.activity.type">
+      <field name="name">Negosiasi Harga</field>
+      <field name="icon">fa-users</field>
+      <field name="res_model">training.course</field>
     </record>
   </data>
 </odoo>
