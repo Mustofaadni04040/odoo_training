@@ -65,6 +65,7 @@
           <field name="ref" />
           <field name="name" />
           <field name="user_id" />
+          <field name="level" />
           <field name="description" />
         </list>
       </field>
@@ -82,9 +83,20 @@
                         <field name="ref"/>
                     </h1>
                 </div>
+                <group string="Informasi">
+                  <group>
+                    <field name="name" />
+                    <field name="level" widget="radio" />
+                  </group>
+                  <group>
+                    <field name="color" />
+                  </group>
+                </group>
                 <group>
-                    <field name="name"/>
-                    <field name="user_id"/>
+                   <separator string="Koordinator"/>
+                   <field name="user_id"/>
+                   <separator string="Login"/>
+                   <field name="email" password="1"/>
                 </group>
                 <notebook>
                     <page string="Sesi">
@@ -135,7 +147,8 @@
           <field name="course_id"/>
           <field name="name"/>
           <field name="partner_id"/>
-          <field name="start_date"/>
+          <field name="start_date" string="Tanggal Mulai" />
+          <field name="end_date" />
           <field name="duration"/>
           <field name="seats"/>
           <field name="taken_seats" widget="progressbar" />
@@ -152,18 +165,24 @@
           <sheet>
             <group>
               <group string="Informasi">
-                <field name="course_id"/>
-                <field name="name"/>
+                <field name="course_id" options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                <field name="name" placeholder="Contoh: Introduction"/>
                 <field name="partner_id"/>
               </group>
               <group string="Jadwal">
-                <field name="start_date"/>
+                <field name="start_date" string="Tanggal Mulai"/>
+                <field name="end_date"/>
                 <field name="duration"/>
-                <field name="seats"/>
               </group>
             </group>
-            <group>
-              <field name="taken_seats" widget="progressbar"/>
+            <group string="">
+                <group>
+                <field name="seats"/>
+                <field name="taken_seats" widget="progressbar"/>
+              </group>
+              <group>
+                <field name="attendees_count" />
+              </group>
             </group>
             <group string="Peserta">
               <field name="attendee_ids" nolabel="1" colspan="2"/>

@@ -2,6 +2,8 @@
 
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
+from random import randint
+from datetime import timedelta, datetime, date
 
 
 # class training_odoo(models.Model):
@@ -40,11 +42,17 @@ class TrainingCourse(models.Model):
         default.update(name=f"{name} ({x})")
         return super().copy(default)
 
-    name = fields.Char(string='Judul', required=True, Tracking=True)
-    description = fields.Text(string='Keterangan', Tracking=True)
-    user_id = fields.Many2one("res.users", string="Penanggung Jawab", Tracking=True)
-    session_line = fields.One2many("training.session", "course_id", string="Sesi", Tracking=True)
-    product_ids = fields.Many2many("product.product", "course_product_rel", "course_id", "product_id", string="Cindera Mata", Tracking=True)
+    def get_default_color(self):
+        return randint(1, 11)
+
+    name = fields.Char(string='Judul', required=True, tracking=True)
+    description = fields.Text(string='Keterangan', tracking=True)
+    user_id = fields.Many2one("res.users", string="Penanggung Jawab", tracking=True)
+    session_line = fields.One2many("training.session", "course_id", string="Sesi", tracking=True)
+    product_ids = fields.Many2many("product.product", "course_product_rel", "course_id", "product_id", string="Cindera Mata", tracking=True)
+    level = fields.Selection([("basic", "Dasar"), ("advanced", "Lanjutan")], string="Tingaktan", default="basic")
+    color = fields.Integer("Warna", default=get_default_color)
+    email = fields.Char(string="Email", related="user_id.login")
 
     _sql_constraints = [
         ("nama_kursus_unik", "UNIQUE(name)", "Judul kursus harus unik"),
@@ -66,6 +74,25 @@ class TrainingSession(models.Model):
             if sesi.seats and sesi.attendee_ids:
                 sesi.taken_seats = 100 * len(sesi.attendee_ids) / sesi.seats
 
+    @api.depends("start_date", "duration")
+    def get_end_date(self):
+        for sesi in self:
+            if not sesi.start_date:
+                sesi.end_date = sesi.start_date
+                continue
+
+            start = fields.Date.from_string(sesi.start_date)
+            sesi.end_date = start + timedelta(days=sesi.duration)
+
+    def set_end_date(self):
+        for sesi in self:
+            if not (sesi.start_date and sesi.end_date):
+                continue
+
+            start_date = fields.Datetime.from_string(sesi.start_date)
+            end_date = fields.Datetime.from_string(sesi.end_date)
+            sesi.duration = (end_date - start_date).days + 1
+
     course_id = fields.Many2one("training.course", string="Judul Kursus", required=True, ondelete="cascade")
     name = fields.Char(string="Nama", required=True)
     start_date = fields.Date(string="Tanggal", default=fields.Date.context_today)
@@ -74,6 +101,13 @@ class TrainingSession(models.Model):
     partner_id = fields.Many2one("res.partner", string="Instruktur", domain=["|", ("instructor", "=", True), ("category_id.name", "ilike", "Pengajar")], default=default_partner_id)
     attendee_ids = fields.Many2many("training.attendee", "session_attendee_rel", "session_id", "attendee_id", "Peserta")
     taken_seats = fields.Float(string="Kursi Terisi", compute="compute_taken_seats")
+    end_date = fields.Date(string="Tanggal Selesai", compute="get_end_date", inverse="set_end_date", store=True)
+    attendees_count = fields.Integer(string="Jumlah Peserta", compute="get_attendees_count", store=True)
+
+    @api.depends("attendee_ids")
+    def get_attendees_count(self):
+        for sesi in self:
+            sesi.attendees_count = len(sesi.attendee_ids)
 
     @api.constrains("seats", "attendee_ids")
     def check_seats_and_attendees(self):
