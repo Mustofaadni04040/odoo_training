@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 
 # class training_odoo(models.Model):
@@ -63,6 +64,12 @@ class TrainingSession(models.Model):
     partner_id = fields.Many2one("res.partner", string="Instruktur", domain=["|", ("instructor", "=", True), ("category_id.name", "ilike", "Pengajar")], default=default_partner_id)
     attendee_ids = fields.Many2many("training.attendee", "session_attendee_rel", "session_id", "attendee_id", "Peserta")
     taken_seats = fields.Float(string="Kursi Terisi", compute="compute_taken_seats")
+
+    @api.constrains("seats", "attendee_ids")
+    def check_seats_and_attendees(self):
+        for r in self:
+            if r.seats < len(r.attendee_ids):
+                raise ValidationError("Jumlah peserta melebihi kuota yang disediakan")
 
 class TrainingAttendee(models.Model):
     _name = "training.attendee"
