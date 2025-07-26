@@ -31,12 +31,16 @@ class TrainingSession(models.Model):
     _name = "training.session"
     _description = "Training Sesi"
 
+    def default_partner_id(self):
+        instruktur = self.env["res.partner"].search(["|", ("instructor", "=", True), ("category_id.name", "ilike", "Pengajar")], limit=1)
+        return instruktur
+
     course_id = fields.Many2one("training.course", string="Judul Kursus", required=True, ondelete="cascade")
     name = fields.Char(string="Nama", required=True)
-    start_date = fields.Date(string="Tanggal")
-    duration= fields.Float(string="Durasi", help="Jumlah Hari Training")
-    seats = fields.Integer(string="Kursi", help="Jumlah Kuota Kursi")
-    partner_id = fields.Many2one("res.partner", string="Instruktur", domain=[("instructor", "=", True)])
+    start_date = fields.Date(string="Tanggal", default=fields.Date.context_today)
+    duration= fields.Float(string="Durasi", help="Jumlah Hari Training", default=3)
+    seats = fields.Integer(string="Kursi", help="Jumlah Kuota Kursi", default=10)
+    partner_id = fields.Many2one("res.partner", string="Instruktur", domain=["|", ("instructor", "=", True), ("category_id.name", "ilike", "Pengajar")], default=default_partner_id)
     attendee_ids = fields.Many2many("training.attendee", "session_attendee_rel", "session_id", "attendee_id", "Peserta")
 
 class TrainingAttendee(models.Model):
@@ -52,3 +56,4 @@ class TrainingAttendee(models.Model):
         ("married", "Menikah"),
         ("divorced", "Cerai")], 
         string="Pernikahan", help="Status Pernikahan")
+    session_ids = fields.Many2many("training.session", "session_attendee_rel", "attendee_id", "session_id", "Sesi")

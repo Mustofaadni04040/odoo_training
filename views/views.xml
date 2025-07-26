@@ -186,13 +186,16 @@
           <sheet>
             <group>
               <group>
-                <field name="name" />
+                <field name="name" string="Nama"/>
                 <field name="sex" widget="radio" />
               </group>
               <group>
                 <field name="email" />
                 <field name="marital" />
               </group>
+            </group>
+            <group string="Sesi">
+              <field name="session_ids" nolabel="1" colspan="2" />
             </group>
           </sheet>
         </form>

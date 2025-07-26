@@ -11,7 +11,9 @@
                 <page string="Sessions">
                     <group>
                         <field name="instructor" />
-                        <field name="session_line" />
+                    </group>
+                    <group>
+                        <field name="session_line" invisible="not instructor"/>
                     </group>
                 </page>
             </notebook>
@@ -23,10 +25,17 @@
         <field name="name">Instructor</field>
         <field name="res_model">res.partner</field>
         <field name="view_mode">kanban,list,form</field>
-        <field name="domain">[('instructor', '=', True)]</field>
+        <field name="domain">['|', ('instructor', '=', True), ('category_id.name', 'ilike', 'Pengajar')]</field>
         <field name="context">{'default_instructor': True}</field> <!-- default_instructor: ketika instructor dibuat langsung aktif/tercentang -->
     </record>
-    
+
+    <record id="data_demo_pengajar_1" model="res.partner.category">
+        <field name="name">Pengajar / Basic</field>
+    </record>
+    <record id="data_demo_pengajar_2" model="res.partner.category">
+        <field name="name">Pengajar / Advanced</field>
+    </record>
+
      <!-- Membuat menu bar configuration -->
       <menuitem id="menu_bar_configuration" name="Configuration" parent="menu_dashboard_training_odoo"/>
       <menuitem id="menu_item_training_instructor" name="Instructor" parent="menu_bar_configuration" action="training_instructor_action"/>
