@@ -35,6 +35,13 @@ class TrainingSession(models.Model):
         instruktur = self.env["res.partner"].search(["|", ("instructor", "=", True), ("category_id.name", "ilike", "Pengajar")], limit=1)
         return instruktur
 
+    @api.depends("seats", "attendee_ids") # methon akan selalu dijalankan setiap ada perubahan di field seats atau attendee_ids
+    def compute_taken_seats(self):
+        for sesi in self:
+            sesi.taken_seats = 0
+            if sesi.seats and sesi.attendee_ids:
+                sesi.taken_seats = 100 * len(sesi.attendee_ids) / sesi.seats
+
     course_id = fields.Many2one("training.course", string="Judul Kursus", required=True, ondelete="cascade")
     name = fields.Char(string="Nama", required=True)
     start_date = fields.Date(string="Tanggal", default=fields.Date.context_today)
@@ -42,6 +49,7 @@ class TrainingSession(models.Model):
     seats = fields.Integer(string="Kursi", help="Jumlah Kuota Kursi", default=10)
     partner_id = fields.Many2one("res.partner", string="Instruktur", domain=["|", ("instructor", "=", True), ("category_id.name", "ilike", "Pengajar")], default=default_partner_id)
     attendee_ids = fields.Many2many("training.attendee", "session_attendee_rel", "session_id", "attendee_id", "Peserta")
+    taken_seats = fields.Float(string="Kursi Terisi", compute="compute_taken_seats")
 
 class TrainingAttendee(models.Model):
     _name = "training.attendee"
