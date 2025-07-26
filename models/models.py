@@ -30,6 +30,15 @@ class TrainingCourse(models.Model):
             vals["ref"] = self.env["ir.sequence"].next_by_code("training.course")
         return super().create(vals_list)
 
+    def copy(self, default=None):
+        default = dict(default or {})
+        name = self.name
+        x = 1
+        while self.search_count([("name", "=", f"{name} ({x})")]):
+            x += 1
+        default.update(name=f"{name} ({x})")
+        return super().copy(default)
+
     name = fields.Char(string='Judul', required=True)
     description = fields.Text(string='Keterangan')
     user_id = fields.Many2one("res.users", string="Penanggung Jawab")
@@ -70,6 +79,12 @@ class TrainingSession(models.Model):
         for r in self:
             if r.seats < len(r.attendee_ids):
                 raise ValidationError("Jumlah peserta melebihi kuota yang disediakan")
+            
+    @api.onchange("duration")
+    def verify_valid_duration(self):
+        if self.duration <= 0:
+            self.duration = 1
+            return {"warning": {"title": "Perhatian", "message": "Durasi Hari Training Tidak Boleh 0 atau Negatif"}}
 
 class TrainingAttendee(models.Model):
     _name = "training.attendee"
