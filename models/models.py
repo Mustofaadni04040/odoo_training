@@ -50,7 +50,7 @@ class TrainingCourse(models.Model):
     user_id = fields.Many2one("res.users", string="Penanggung Jawab", tracking=True)
     session_line = fields.One2many("training.session", "course_id", string="Sesi", tracking=True)
     product_ids = fields.Many2many("product.product", "course_product_rel", "course_id", "product_id", string="Cindera Mata", tracking=True)
-    level = fields.Selection([("basic", "Dasar"), ("advanced", "Lanjutan")], string="Tingaktan", default="basic")
+    level = fields.Selection([("basic", "Dasar"), ("advanced", "Lanjutan")], string="Tingkatan", default="basic")
     color = fields.Integer("Warna", default=get_default_color)
     email = fields.Char(string="Email", related="user_id.login")
 
