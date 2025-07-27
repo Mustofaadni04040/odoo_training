@@ -297,6 +297,19 @@
       </field>
     </record>
 
+    <!-- Membuat view pivot session -->
+    <record id="training_session_pivot_view" model="ir.ui.view">
+      <field name="name">training.session.pivot</field>
+      <field name="model">training.session</field>
+      <field name="arch" type="xml">
+        <pivot string="Pivot" sample="1" disable_linking="True" display_quantity="true">
+          <field name="start_date" type="row" />
+          <field name="course_id" type="col"/>
+          <field name="attendees_count" type="measure" />
+        </pivot>
+      </field>
+    </record>
+
     <!-- Membuat Action/Event Course -->
 
     <record id="training_course_action" model="ir.actions.act_window">
@@ -314,7 +327,7 @@
     <record id="training_session_action" model="ir.actions.act_window">
       <field name="name">Session</field>
       <field name="res_model">training.session</field>
-      <field name="view_mode">list,form,calendar,graph</field>
+      <field name="view_mode">list,form,calendar,graph,pivot</field>
     </record>
 
     <!-- Membuat Action/Event attendee -->
