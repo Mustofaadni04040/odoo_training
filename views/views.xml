@@ -264,12 +264,31 @@
       </field>
     </record>
 
+    <!-- Membuat view activity course -->
+    <record id="training_course_view_activity" model="ir.ui.view">
+      <field name="name">training.course.view.activity</field>
+      <field name="model">training.course</field>
+      <field name="arch" type="xml">
+        <activity string="Course">
+          <field name="id" />
+          <templates>
+            <div t-name="activity-box">
+              <div>
+                <field name="name" display="full" />
+                <field name="user_id" muted="1" display="full" />
+              </div>
+            </div>
+          </templates>
+        </activity>
+      </field>
+    </record>
+
     <!-- Membuat Action/Event Course -->
 
     <record id="training_course_action" model="ir.actions.act_window">
       <field name="name">Course</field>
       <field name="res_model">training.course</field>
-      <field name="view_mode">list,form</field>
+      <field name="view_mode">list,form,activity</field>
       <field name="help" type="html">
         <p name="o_view_nocontent_smiling_face">
             Buatlah kursus pertamamu ...
