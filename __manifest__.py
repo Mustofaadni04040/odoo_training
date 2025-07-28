@@ -35,7 +35,8 @@
         'views/views.xml',
         'views/templates.xml',
         'views/partner_views.xml',
-        'views/menuitem_views.xml'
+        'views/menuitem_views.xml',
+        'wizard/training_wizard_views.xml'
     ],
      
     # only loaded in demonstration mode

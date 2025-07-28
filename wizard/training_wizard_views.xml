@@ -19,14 +19,16 @@
         </field>
      </record>
 
+     <!-- Membuat  -->
+
      <!-- Membuat action/event wizard -->
       <record id="training_wizard_action" model="ir.actions.act_window">
         <field name="name">Add Attendees</field>
         <field name="res_model">training.wizard</field>
         <field name="view_mode">form</field>
-        <field name="target">new</field>
-        <field name="binding_model_id" ref="model_training_session"/>
-        <field name="binding_view_types">form</field>
+        <field name="target">new</field> <!-- membuat tampilan popup-->
+        <field name="binding_model_id" ref="model_training_session"/> <!-- menysipkan wizard pada sebuah model-->
+        <field name="binding_view_types">form</field> <!-- menyesipkan wizard pada sebuah view-->
       </record>
 
 </odoo>
