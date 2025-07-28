@@ -8,6 +8,7 @@
 <menuitem id="menu_item_training_session" name="Session" parent="menu_bar_training_odoo" action="training_session_action"/>
 <!-- Menu item wizard -->
 <menuitem id="menu_item_training_wizard" name="Add Attendees" parent="menu_bar_training_odoo" action="training_wizard_menu_list_action"/>
+<menuitem id="menu_item_training_wizard_cron" name="Run Scheduler" parent="menu_bar_training_odoo" action="training_wizard_cron_action" />
 <!-- Menu Bar Konfigurasi -->
 <menuitem id="menu_bar_configuration" name="Configuration" parent="menu_dashboard_training_odoo"/>
 <!-- Menu Item -->
