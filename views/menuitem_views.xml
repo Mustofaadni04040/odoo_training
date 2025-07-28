@@ -12,4 +12,6 @@
 <menuitem id="menu_item_training_instructor" name="Instructor" parent="menu_bar_configuration" action="training_instructor_action"/>
 <menuitem id="menu_item_training_attendee" name="Attendee" parent="menu_bar_configuration" action="training_attendee_action"/>
 <menuitem id="menu_item_instructor_tags" name="Instructor Tags" parent="menu_bar_configuration" action="base.action_partner_category_form" />
+<!-- Menu item wizard -->
+<menuitem id="menu_item_training_wizard" name="Add Attendees" parent="menu_bar_training_odoo" action="training_wizard_menu_list_action"/>
 </odoo>
