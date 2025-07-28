@@ -1,6 +1,32 @@
 <odoo>
 
     <!-- Membuat view form wizard -->
-     
+     <record id="training_wizard_view_form" model="ir.ui.view">
+        <field name="name">training.wizard.form</field>
+        <field name="model">training.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Wizard Form">
+                <group>
+                    <field name="session_id" invisible="1"/>
+                    <field name="attendee_ids" />
+                </group>
+                <footer>
+                    <button name="tambah_peserta" type="object" string="Tambah" confirm="Apakah anda yakin ingin menambah peserta?" class="oe_highlight" />
+                    or
+                    <button string="Batal" special="cancel" />
+                </footer>
+            </form>
+        </field>
+     </record>
+
+     <!-- Membuat action/event wizard -->
+      <record id="training_wizard_action" model="ir.actions.act_window">
+        <field name="name">Add Attendees</field>
+        <field name="res_model">training.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_training_session"/>
+        <field name="binding_view_types">form</field>
+      </record>
 
 </odoo>
