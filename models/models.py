@@ -103,6 +103,9 @@ class TrainingSession(models.Model):
     taken_seats = fields.Float(string="Kursi Terisi", compute="compute_taken_seats")
     end_date = fields.Date(string="Tanggal Selesai", compute="get_end_date", inverse="set_end_date", store=True)
     attendees_count = fields.Integer(string="Jumlah Peserta", compute="get_attendees_count", store=True)
+    color = fields.Integer("Color Index", default=0)
+    level = fields.Selection(string="Tingkatan", related="course_id.level")
+    state = fields.Selection([("draft", "Draft"), ("open", "Open"), ("done", "Done")], string="Status", default="draft")
 
     @api.depends("attendee_ids")
     def get_attendees_count(self):

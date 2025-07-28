@@ -310,6 +310,49 @@
       </field>
     </record>
 
+    <!-- Membuat training kanban session -->
+     <record id="training_session_kanban_view" model="ir.ui.view">
+      <field name="name">training.session.kanban</field>
+      <field name="model">training.session</field>
+      <field name="arch" type="xml">
+        <kanban highlight_color="color" default_group_by="course_id" class="o_kanban_small_column o_opportunity_kanban" sample="1">
+          <field name="course_id" />
+          <field name="name" />
+          <field name="partner_id" />
+          <field name="duration" />
+          <field name="start_date" />
+          <field name="end_date" />
+          <field name="level" />
+          <field name="color" />
+          <field name="state" />
+          <field name="attendees_count" />
+          <progressbar field="state" colors='{"open": "success", "open": "warning", "draft": "danger"}' sum_field="attendees_count" />
+          <templates>
+            <t t-name="menu">
+              <t t-if="widget.editable">
+                <a role="menuitem" type="open" class="dropdown-item">Edit</a>   
+              </t>
+              <t t-if="widget.deletable">
+                <a role="menuitem" type="delete" class="dropdown-item">Delete</a>   
+              </t>
+              <field name="color" widget="kanban_color_picker" />
+            </t>
+            <t t-name="card">
+              <field name="name" class="fw-bold fs-5" />
+              <field name="partner_id" class="fw-bold fs-5" />
+              <field name="level" widget="label_selection" options="{'classes': {'basic': 'warning', 'advanced': 'success'}}" />
+              <footer class="pt-1">
+                <field name="start_date" />
+                <b>s/d</b>
+                <field name="end_date" />
+                <field name="partner_id" widget="many2one_avatar_user" class="ms-auto" />
+              </footer>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+     </record>
+
     <!-- Membuat Action/Event Course -->
 
     <record id="training_course_action" model="ir.actions.act_window">
@@ -327,7 +370,7 @@
     <record id="training_session_action" model="ir.actions.act_window">
       <field name="name">Session</field>
       <field name="res_model">training.session</field>
-      <field name="view_mode">list,form,calendar,graph,pivot</field>
+      <field name="view_mode">list,form,calendar,graph,pivot,kanban</field>
     </record>
 
     <!-- Membuat Action/Event attendee -->
