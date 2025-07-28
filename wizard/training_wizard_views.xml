@@ -19,7 +19,17 @@
         </field>
      </record>
 
-     <!-- Membuat view form wizard untuk menu item dan action view list -->
+     <!-- Membuat action/event wizard: satu session -->
+      <record id="training_wizard_action" model="ir.actions.act_window">
+        <field name="name">Add Attendees</field>
+        <field name="res_model">training.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_training_session"/>
+        <field name="binding_view_types">form</field>
+      </record>
+
+           <!-- Membuat view form wizard untuk menu item dan action view list -->
       <record id="training_wizard_view_form_menu_list" model="ir.ui.view">
         <field name="name">training.wizard.form.menu.list</field>
         <field name="model">training.wizard</field>
@@ -38,16 +48,6 @@
         </field>
       </record>
 
-     <!-- Membuat action/event wizard: satu session -->
-      <record id="training_wizard_action" model="ir.actions.act_window">
-        <field name="name">Add Attendees</field>
-        <field name="res_model">training.wizard</field>
-        <field name="view_mode">form</field>
-        <field name="target">new</field>
-        <field name="binding_model_id" ref="model_training_session"/>
-        <field name="binding_view_types">form</field>
-      </record>
-
      <!-- Membuat action/event wizard: banyak session banyak peserta -->
       <record id="training_wizard_menu_list_action" model="ir.actions.act_window">
         <field name="name">Add Attendees</field>
@@ -56,7 +56,7 @@
         <field name="target">new</field> <!-- membuat tampilan popup-->
         <field name="view_id" ref="training_wizard_view_form_menu_list" />
         <field name="binding_model_id" ref="model_training_session"/> <!-- menysipkan wizard pada sebuah model-->
-        <field name="binding_view_types">form</field> <!-- menyesipkan wizard pada sebuah view-->
+        <field name="binding_view_types">list</field> <!-- menyesipkan wizard pada sebuah view-->
       </record>
 
 </odoo>

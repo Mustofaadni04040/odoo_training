@@ -33,10 +33,10 @@
         # 'security/ir.model.access.csv',
         'views/sequence_data.xml',
         'views/views.xml',
-        'views/templates.xml',
         'views/partner_views.xml',
+        'wizard/training_wizard_views.xml',
         'views/menuitem_views.xml',
-        'wizard/training_wizard_views.xml'
+        'views/templates.xml',
     ],
      
     # only loaded in demonstration mode

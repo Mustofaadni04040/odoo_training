@@ -105,7 +105,16 @@ class TrainingSession(models.Model):
     attendees_count = fields.Integer(string="Jumlah Peserta", compute="get_attendees_count", store=True)
     color = fields.Integer("Color Index", default=0)
     level = fields.Selection(string="Tingkatan", related="course_id.level")
-    state = fields.Selection([("draft", "Draft"), ("open", "Open"), ("done", "Done")], string="Status", default="draft")
+    state = fields.Selection([("draft", "Draft"), ("open", "Open"), ("done", "Done")], string="Status", readonly=True, default="draft")
+
+    def action_confirm(self):
+        self.write({"state": "open"})
+
+    def action_cancel(self):
+        self.write({"state": "draft"})
+    
+    def action_close(self):
+        self.write({"state": "done"})
 
     @api.depends("attendee_ids")
     def get_attendees_count(self):
