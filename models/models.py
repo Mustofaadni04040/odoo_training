@@ -116,6 +116,11 @@ class TrainingSession(models.Model):
     def action_close(self):
         self.write({"state": "done"})
 
+    def cron_expire_session(self):
+        now = fields.Date.today()
+        expired_ids = self.search([("end_date", "<", now), ("state", "=", "open")])
+        expired_ids.write({"state": "done"})
+
     @api.depends("attendee_ids")
     def get_attendees_count(self):
         for sesi in self:
