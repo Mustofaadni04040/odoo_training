@@ -1,0 +1,14 @@
+<odoo>
+
+    <!-- Scheduler training session -->
+    <record id="expire_training_session_cron" model="ir.cron">
+        <field name="name">Update Status Training Session Berdasarkan Expire Tanggal Selesai</field>
+        <field name="model_id" ref="model_training_session" />
+        <field name="state">code</field>
+        <field name="code">model.cron_expire_session()</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+    </record>
+
+</odoo>

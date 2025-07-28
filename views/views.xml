@@ -108,6 +108,7 @@
                                     <field name="start_date"/>
                                     <field name="duration"/>
                                     <field name="seats"/>
+                                    <field name="state" />
                                 </list>
                                 <form string='Sesi'>
                                     <group>
@@ -152,6 +153,7 @@
           <field name="duration" avg="Rata-Rata Durasi"/>
           <field name="seats" sum="Total Kursi" />
           <field name="taken_seats" widget="progressbar" optional="hide" />
+          <field name="state" />
         </list>
       </field>
     </record>
@@ -162,22 +164,28 @@
       <field name="model">training.session</field>
       <field name="arch" type="xml">
         <form string="Session Form">
+          <header>
+            <button name="action_confirm" type="object" string="Confirm" invisible="state != 'draft'" class="oe_highlight" />
+            <button name="action_cancel" type="object" string="Cancel" invisible="state != 'open'" />
+            <button name="action_close" type="object" string="Close" invisible="state != 'open'" class="oe_highlight" />
+            <field name="state" widget="statusbar" statusbar_invisible="draft,open,cancel" />
+          </header>
           <sheet>
             <group>
               <group string="Informasi">
-                <field name="course_id" options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
-                <field name="name" placeholder="Contoh: Introduction"/>
-                <field name="partner_id"/>
+                <field name="course_id" readonly="state != 'draft'" options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                <field name="name" placeholder="Contoh: Introduction" readonly="state != 'draft'"/>
+                <field name="partner_id" readonly="state != 'draft'"/>
               </group>
               <group string="Jadwal">
-                <field name="start_date" string="Tanggal Mulai"/>
-                <field name="end_date"/>
-                <field name="duration"/>
+                <field name="start_date" string="Tanggal Mulai" readonly="state != 'draft'"/>
+                <field name="end_date" readonly="state != 'draft'"/>
+                <field name="duration" readonly="state != 'draft'"/>
               </group>
             </group>
             <group string="">
                 <group>
-                <field name="seats"/>
+                <field name="seats" readonly="state != 'draft'"/>
                 <field name="taken_seats" widget="progressbar"/>
               </group>
               <group>
@@ -185,7 +193,7 @@
               </group>
             </group>
             <group string="Peserta">
-              <field name="attendee_ids" nolabel="1" colspan="2"/>
+              <field name="attendee_ids" readonly="state != 'draft'" nolabel="1" colspan="2"/>
             </group>
           </sheet>
         </form>
