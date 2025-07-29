@@ -1,0 +1,160 @@
+<odoo>
+ 
+ 
+    <!-- Report Template Header - Session -->
+ 
+    <template id="header_session">
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <div class="header">
+            <div class="row mt32 mb32">
+                <div class="col-6">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 100px;" />
+                </div>
+                <div class="col-6 text-right" style="font:15px lucida-console,sans-serif !important;background-color:#960380;padding:10px">
+                    <span t-field="company.partner_id" style="font-size: 20px;color:white;font-weight: bold;"/>
+                    <br/>
+                    <span t-field="company.partner_id.street" style="color:white;font-weight: bold;"/>
+                    <br/>
+                    <span t-field="company.partner_id.city" style="color:white;font-weight: bold;"/>
+                    <br/>
+                    <span t-field="company.partner_id.country_id" style="color:white;font-weight: bold;"/>
+                    <br/>
+                    <span t-field="company.partner_id.vat" style="color:white;"/>
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </template>
+ 
+ 
+    <!-- Report Template Body - Session -->
+ 
+    <template id="body_session">
+        <div class="page">
+            <div class="d-flex justify-content-center">
+                <table class="table table-bordered" style="width:50%">
+                    <tbody>
+                        <tr>
+                            <td style="width:25%; background-color:#960380; padding:5px;color:white;font-weight: bold;">Course</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-esc="o.course_id.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:25%; background-color:#960380; padding:5px;color:white;font-weight: bold;">Session</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-esc="o.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:25%; background-color:#960380; padding:5px;color:white;font-weight: bold;">Instructor</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-esc="o.partner_id.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:25%; background-color:#960380; padding:5px;color:white;font-weight: bold;">Seats</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-esc="o.seats"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:25%; background-color:#960380; padding:5px;color:white;font-weight: bold;">Taken Seats</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-esc="o.taken_seats"/>%
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-bordered" style="width:50%">
+                    <tbody>
+                        <tr>
+                            <td style="width:25%; background-color:#960380; padding:5px;color:white;font-weight: bold;">Start Date</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-if="o.start_date">
+                                    <t t-esc="o.start_date.strftime('%d/%m/%Y')"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:25%; background-color:#960380; padding:5px;color:white;font-weight: bold;">End Date</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-if="o.end_date">
+                                    <t t-esc="o.end_date.strftime('%d/%m/%Y')"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:25%; background-color:#960380; padding:5px;color:white;font-weight: bold;">Duration</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-esc="o.duration"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:25%; background-color:#960380; padding:5px;color:white;font-weight: bold;">Attendees</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-esc="o.attendees_count"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <table class="table table-bordered mt-4">
+                <thead style="background-color:#960380;color:white;font-weight: bold;font-weight: bold;">
+                    <tr>
+                        <td class="text-center">Name</td>
+                        <td class="text-center">Email</td>
+                        <td class="text-center">Kelamin</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="o.attendee_ids" t-as="attendee">
+                        <t t-set="gender" t-value="dict([('male','Pria'),('female','Wanita'), (False, '')])"/>
+                        <tr>
+                            <td>
+                                <t t-esc="attendee.name"/>
+                            </td>
+                            <td>
+                                <t t-esc="attendee.email"/>
+                            </td>
+                            <td>
+                                <t t-esc="gender[attendee.sex]"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </template>
+ 
+ 
+    <!-- Report Template - Session -->
+ 
+    <template id="report_session">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div t-if="report_type == 'html'">
+                    <div>
+                        <t t-call="training_odoo.header_session"/>
+                    </div>
+                    <div style="margin-top:150px">
+                        <t t-call="training_odoo.body_session"/>
+                    </div>
+                </div>
+                <div t-else="">
+                    <t t-call="training_odoo.header_session"/>
+                    <t t-call="web.external_layout">
+                        <t t-call="training_odoo.body_session"/>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+ 
+ 
+</odoo>
