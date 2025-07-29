@@ -1,33 +1,21 @@
 <odoo>
 
-    <!-- Membuat category group training  -->
+    <!-- Membuat category group training -->
      <record id="module_category_training_odoo" model="ir.module.category">
         <field name="name">Training</field>
      </record>
 
-     <!-- Membuat group training  -->
-      <record id="group_training_read" model="res.groups">
-        <field name="name">Training / Read</field>
+     <!-- Membuat group training -->
+      <record id="group_training_user" model="res.groups">
+        <field name="name">Training / User</field>
         <field name="category_id" ref="module_category_training_odoo" />
       </record>
 
-      <record id="group_training_create" model="res.groups">
-        <field name="name">Training / Create</field>
+      <record id="group_training_manager" model="res.groups">
+        <field name="name">Training / Manager</field>
         <field name="category_id" ref="module_category_training_odoo" />
-        <field name="implied_ids" eval="[(4, ref('group_training_read'))]" /> <!-- apa yang bisa dilakukan oleh group read, maka group create juga bisa dst..-->
-      </record>
-
-      <record id="group_training_update" model="res.groups">
-        <field name="name">Training / Update</field>
-        <field name="category_id" ref="module_category_training_odoo" /> <!-- Many2one-->
-        <field name="implied_ids" eval="[(4, ref('group_training_create'))]" /> <!-- Many2many, angka 4 untuk menginsert record baru-->
-      </record>
-
-      <record id="group_training_delete" model="res.groups">
-        <field name="name">Training / Delete</field>
-        <field name="category_id" ref="module_category_training_odoo" />
-        <field name="implied_ids" eval="[(4, ref('group_training_update'))]" />
-        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]" /> <!-- memberikan group ini ke user root (odoo bot) dan admin (mitchell -->
+        <field name="implied_ids" eval="[(4, ref('group_training_user'))]" />
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]" />
       </record>
 
 </odoo>
