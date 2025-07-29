@@ -121,6 +121,9 @@ class TrainingSession(models.Model):
         expired_ids = self.search([("end_date", "<", now), ("state", "=", "open")])
         expired_ids.write({"state": "done"})
 
+    def action_print_session(self):
+        return self.env.ref("training_odoo.report_training_session_action").report_action(self)
+
     @api.depends("attendee_ids")
     def get_attendees_count(self):
         for sesi in self:

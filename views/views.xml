@@ -165,6 +165,7 @@
       <field name="arch" type="xml">
         <form string="Session Form">
           <header>
+            <button name="action_print_session" type="object" string="Print Session" invisible="state != 'open'" class="oe-highlight" />
             <button name="action_confirm" type="object" string="Confirm" invisible="state != 'draft'" groups="training_odoo.group_training_manager" class="btn-primary" />
             <button name="action_cancel" type="object" string="Cancel" invisible="state != 'open'" />
             <button name="action_close" type="object" string="Close" invisible="state != 'open'" groups="training_odoo.group_training_manager" class="oe_highlight" />
