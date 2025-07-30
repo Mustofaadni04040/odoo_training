@@ -59,6 +59,9 @@ class TrainingCourse(models.Model):
         ("nama_keterangan_cek", "CHECK(name != description)", "Judul kursus dan keterangan tidak boleh sama")
     ]
 
+    def action_print_course(self):
+        return self.env.ref("training_odoo.report_training_course_action").report_action(self)
+
 class TrainingSession(models.Model):
     _name = "training.session"
     _description = "Training Sesi"

@@ -3,7 +3,7 @@
     <record id="report_training_session_action" model="ir.actions.report">
         <field name="name">Training Session (PDF)</field>
         <field name="model">training.session</field>
-        <field name="report_type">qweb-html</field>
+        <field name="report_type">qweb-html</field> <!-- qweb-html | qweb-pdf -->
         <field name="report_name">training_odoo.report_session</field>
         <field name="report_file">training_odoo.report_training_session</field>
         <field name="print_report_name">'Session - %s' % (object.name)</field>

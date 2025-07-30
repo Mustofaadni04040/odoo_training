@@ -77,6 +77,9 @@
     <field name="model">training.course</field>
     <field name="arch" type="xml">
         <form string="Course Form">
+            <header>
+              <button name="action_print_course" type="object" string="Print Course" class="oe_highlight" />
+            </header>
             <sheet>
                 <div class="oe_title">
                     <h1>
