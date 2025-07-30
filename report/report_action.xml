@@ -11,4 +11,16 @@
         <field name="binding_view_types">form</field>
     </record>
 
+    <!-- Membuat action/event report course -->
+     <record id="report_training_course_action" model="ir.actions.report">
+        <field name="name">Training Course (XLSX)</field>
+        <field name="model">training.course</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">training_odoo.report_course</field>
+        <field name="report_file">training_odoo.report_training_course</field>
+        <field name="print_report_name">'Course - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_training_course" />
+        <field name="binding_view_types">form</field>
+     </record>
+
 </odoo>

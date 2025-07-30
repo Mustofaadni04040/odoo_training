@@ -26,7 +26,7 @@
     'version': '0.1',
  
     # any module necessary for this one to work correctly
-    'depends': ['base', 'product', 'mail'],
+    'depends': ['base', 'product', 'mail', 'report_xlsx'],
  
     # always loaded
     'data': [
